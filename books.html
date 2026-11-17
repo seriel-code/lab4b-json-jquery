@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Details</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+  <h1>Book Details</h1>
+
+  <p id="firstTitle"></p>
+  <p id="secondAuthor"></p>
+
+  <h2>Genres of All Books</h2>
+  <ul id="bookGenres"></ul>
+
+  <p id="error"></p>
+
+  <script>
+    $.getJSON("books.json", function (books) {
+      // (a) Get the first book's title.
+      const firstTitle = "First book title: " + books[0].title;
+      $("#firstTitle").text(firstTitle);
+      console.log(firstTitle);
+
+      // (b) Get the second book's author.
+      const secondAuthor = "Second book author: " + books[1].author;
+      $("#secondAuthor").text(secondAuthor);
+      console.log(secondAuthor);
+
+      // (c) Show the genres for each book.
+      for (const book of books) {
+        const genreLine = book.title + ": " + book.genres.join(", ");
+        const listItem = $("<li>").text(genreLine);
+        $("#bookGenres").append(listItem);
+        console.log(genreLine);
+      }
+    }).fail(function () {
+      $("#error").text("Could not load books.json.");
+    });
+  </script>
+</body>
+</html>
